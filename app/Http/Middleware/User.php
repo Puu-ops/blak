@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class User
 {
@@ -15,6 +16,15 @@ class User
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            // ไม่ให้ librarian เข้าถึงหน้า Dashboard ของผู้ใช้ทั่วไป
+            if ($user->usertype == "staff" && $request->is('dashboard')) {
+                return redirect('staff/dashboard');
+            }
+        }
+
         return $next($request);
     }
 }
