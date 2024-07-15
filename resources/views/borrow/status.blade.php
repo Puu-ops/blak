@@ -19,40 +19,42 @@
                     @endif
 
                     @forelse ($borrows as $borrow)
-                        <div class="mb-3 p-3 border rounded">
-                            <div class="mb-2">
+                        <div class="mb-3 p-3 border rounded flex items-center">
+                            <div class="custom-margin-right">
                                 @if ($borrow->book && $borrow->book->cover_image)
-                                    <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="w-20 h-20 object-cover">
+                                    <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="w-40 h-40 object-cover">
                                 @else
                                     <span>No Image</span>
                                 @endif
                             </div>
-                            <div class="mb-2">
-                                @if ($borrow->book)
-                                    หนังสือ: {{ $borrow->book->title }}
-                                @else
-                                    หนังสือ: <span>ไม่พบข้อมูลหนังสือ</span>
-                                @endif
-                            </div>
-                            <div class="mb-2">
-                                วันที่ยืม: {{ \Carbon\Carbon::parse($borrow->borrowed_at)->format('d/m/Y') }}
-                            </div>
-                            <div class="mb-2">
-                                วันที่กำหนดคืน: {{ \Carbon\Carbon::parse($borrow->return_by)->format('d/m/Y') }}
-                            </div>
-                            <div class="mb-2">
-                                @if (is_null($borrow->returned_at) && \Carbon\Carbon::parse($borrow->return_by)->isPast())
-                                    <span class="text-red-600">(เลยกำหนดคืน)</span>
-                                @elseif (is_null($borrow->returned_at))
-                                    <span class="text-green-600">(อยู่ในช่วงการยืม)</span>
-                                @else
-                                    <span class="text-gray-600">(คืนแล้วเมื่อ {{ \Carbon\Carbon::parse($borrow->returned_at)->format('d/m/Y') }})</span>
-                                @endif
-                            </div>
                             <div>
-                                <form action="{{ route('books.return', ['book' => $borrow->book_id]) }}" method="get">
-                                    <button type="submit" class="btn btn-primary">คืนหนังสือ</button>
-                                </form>
+                                <div class="mb-2">
+                                    @if ($borrow->book)
+                                        หนังสือ: {{ $borrow->book->title }}
+                                    @else
+                                        หนังสือ: <span>ไม่พบข้อมูลหนังสือ</span>
+                                    @endif
+                                </div>
+                                <div class="mb-2">
+                                    วันที่ยืม: {{ \Carbon\Carbon::parse($borrow->borrowed_at)->format('d/m/Y') }}
+                                </div>
+                                <div class="mb-2">
+                                    วันที่กำหนดคืน: {{ \Carbon\Carbon::parse($borrow->return_by)->format('d/m/Y') }}
+                                </div>
+                                <div class="mb-2">
+                                    @if (is_null($borrow->returned_at) && \Carbon\Carbon::parse($borrow->return_by)->isPast())
+                                        <span class="text-red-600">(เลยกำหนดคืน)</span>
+                                    @elseif (is_null($borrow->returned_at))
+                                        <span class="text-green-600">(อยู่ในช่วงการยืม)</span>
+                                    @else
+                                        <span class="text-gray-600">(คืนแล้วเมื่อ {{ \Carbon\Carbon::parse($borrow->returned_at)->format('d/m/Y') }})</span>
+                                    @endif
+                                </div>
+                                <div>
+                                    <form action="{{ route('books.return', ['book' => $borrow->book_id]) }}" method="get">
+                                        <button type="submit" class="btn btn-primary return-btn">คืนหนังสือ</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     @empty
@@ -63,3 +65,22 @@
         </div>
     </div>
 </x-app-layout>
+
+<style>
+.custom-margin-right {
+    margin-right: 20px; /* คุณสามารถปรับระยะห่างตามต้องการ */
+}
+.return-btn {
+    background-color: #007bff; /* สีพื้นหลัง */
+    color: white; /* สีตัวอักษร */
+    border: none; /* ไม่มีขอบ */
+    padding: 10px 20px; /* ระยะห่างภายใน */
+    font-size: 16px; /* ขนาดตัวอักษร */
+    border-radius: 5px; /* มุมโค้งมน */
+    cursor: pointer; /* เปลี่ยนเคอร์เซอร์เมื่อ hover */
+}
+
+.return-btn:hover {
+    background-color: #0056b3; /* สีพื้นหลังเมื่อ hover */
+}
+</style>
