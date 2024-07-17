@@ -20,13 +20,15 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'description' => 'nullable|string', // Validate description field
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'coverImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // corrected field name to 'coverImage'
         ]);
 
         // Handle file upload
-        $coverImagePath = null;
-        if ($request->hasFile('image')) {
-            $coverImagePath = $request->file('image')->store('cover_images', 'public');
+        if ($request->hasFile('coverImage')) {
+            $image = $request->file('coverImage');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images/books'), $imageName);
+            $coverImagePath = 'images/books/' . $imageName;
         }
 
         // Store book in database
@@ -34,9 +36,10 @@ class BookController extends Controller
             'title' => $request->title,
             'author' => $request->author,
             'category' => $request->category,
-            'description' => $request->description, // Ensure description field is included
-            'cover_image' => $coverImagePath,
+            'description' => $request->description,
+            'cover_image' => $coverImagePath, // Ensure to use the correct variable name
         ]);
+
         // Redirect back with success message
         return redirect()->route('books.create')->with('success', 'Book added successfully.');
     }
@@ -51,6 +54,4 @@ class BookController extends Controller
     {
         return view('books.show', compact('book'));
     }
-
-
 }
