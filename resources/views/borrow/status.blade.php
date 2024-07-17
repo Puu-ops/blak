@@ -21,9 +21,9 @@
                     
                     
                         @forelse ($borrows as $borrow)
-                            <div class="mb-3 p-3 border rounded flex items-start">
+                            <div class="mb-3 p-3 border rounded flex items-start" style="margin-left: 120px">
                             
-                                <div class="custom-margin-right">
+                                <div class="custom-margin-ri">
                                     @if ($borrow->book && $borrow->book->cover_image)
                                         <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="rounded-lg" style="max-width: 300px;">
                                     @else
@@ -75,7 +75,7 @@
 
 <style>
 .custom-margin-right {
-    margin-right: 120px; /* คุณสามารถปรับระยะห่างตามต้องการ */
+    margin-right: 20px; /* คุณสามารถปรับระยะห่างตามต้องการ */
 }
 .return-btn {
     background-color: #007bff; /* สีพื้นหลัง */
@@ -89,8 +89,5 @@
 
 .return-btn:hover {
     background-color: #0056b3; /* สีพื้นหลังเมื่อ hover */
-}
-.flex-grow{
-    margin-left: 120px; /* คุณสามารถปรับระยะห่างตามต้องการ */
 }
 </style>

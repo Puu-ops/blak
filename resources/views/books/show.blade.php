@@ -13,7 +13,7 @@
 
         .book-info {
             flex: 1;
-            margin-left: 20px; /* ปรับระยะห่างฝั่งซ้าย */
+            margin-left: 120px; /* ปรับระยะห่างฝั่งซ้าย */
         }
 
         .book-image {
