@@ -20,24 +20,23 @@ class BookController extends Controller
             'author' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'description' => 'nullable|string', // Validate description field
-            'coverImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // corrected field name to 'coverImage'
+            'coverImage' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Ensure coverImage field name matches form input
         ]);
 
         // Handle file upload
         if ($request->hasFile('coverImage')) {
             $image = $request->file('coverImage');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images/books'), $imageName);
-            $coverImagePath = 'images/books/' . $imageName;
+            $image->move(public_path('storage/cover_images'), $imageName); // Move image to public storage/cover_images directory
         }
 
         // Store book in database
-        Book::create([
+        $book = Book::create([
             'title' => $request->title,
             'author' => $request->author,
             'category' => $request->category,
             'description' => $request->description,
-            'cover_image' => $coverImagePath, // Ensure to use the correct variable name
+            'cover_image' => 'storage/cover_images/' . $imageName, // Save path to cover image in database
         ]);
 
         // Redirect back with success message
