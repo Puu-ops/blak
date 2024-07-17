@@ -19,7 +19,7 @@
                     @endif
 
                     @forelse ($borrows as $borrow)
-                        <div class="mb-3 p-3 border rounded flex items-center">
+                        <div class="mb-3 p-3 border rounded flex items-start">
                             <div class="custom-margin-right">
                                 @if ($borrow->book && $borrow->book->cover_image)
                                     <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="w-40 h-40 object-cover">
@@ -27,7 +27,7 @@
                                     <span>No Image</span>
                                 @endif
                             </div>
-                            <div>
+                            <div class="flex-grow">
                                 <div class="mb-2">
                                     @if ($borrow->book)
                                         หนังสือ: {{ $borrow->book->title }}
@@ -50,11 +50,11 @@
                                         <span class="text-gray-600">(คืนแล้วเมื่อ {{ \Carbon\Carbon::parse($borrow->returned_at)->format('d/m/Y') }})</span>
                                     @endif
                                 </div>
-                                <div>
-                                    <form action="{{ route('books.return', ['book' => $borrow->book_id]) }}" method="get">
-                                        <button type="submit" class="btn btn-primary return-btn">คืนหนังสือ</button>
-                                    </form>
-                                </div>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <form action="{{ route('books.return', ['book' => $borrow->book_id]) }}" method="get">
+                                    <button type="submit" class="btn btn-primary return-btn">คืนหนังสือ</button>
+                                </form>
                             </div>
                         </div>
                     @empty
