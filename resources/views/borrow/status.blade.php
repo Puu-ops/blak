@@ -23,9 +23,9 @@
                         @forelse ($borrows as $borrow)
                             <div class="mb-3 p-3 border rounded flex items-start" style="margin-left: 120px">
                             
-                                <div class="custom-margin-ri">
+                                <div class="custom-margin-right">
                                     @if ($borrow->book && $borrow->book->cover_image)
-                                        <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="rounded-lg" style="max-width: 300px;">
+                                        <img src="{{ asset('storage/' . $borrow->book->cover_image) }}" alt="Book Cover" class="w-40 h-40 object-cover">
                                     @else
                                         <span>No Image</span>
                                     @endif
