@@ -10,7 +10,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="md:w-full flex justify-center items-center mb-6 md:mb-0">
+                
                     
                         @if(session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -21,7 +21,7 @@
                     
                     
                         @forelse ($borrows as $borrow)
-                            <div class="mb-3 p-3 border rounded flex items-start" style="margin-left: 120px">
+                            <div class="mb-3 p-3 border rounded flex items-start">
                             
                                 <div class="custom-margin-right">
                                     @if ($borrow->book && $borrow->book->cover_image)
@@ -67,7 +67,7 @@
                             <p>ไม่พบรายการยืมคืน</p>
                         @endforelse
                     
-                </div>
+                
             </div>
         </div>
     </div>
